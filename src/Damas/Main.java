@@ -1,4 +1,5 @@
 package Damas;
+
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -31,7 +32,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Main extends Application {
-public static final int TAMANY = 80;
+
+    public static final int TAMANY = 80;
     public static final int WIDTH = 8;
     public static final int HEIGHT = 8;
 
@@ -46,74 +48,60 @@ public static final int TAMANY = 80;
         Pane root = new Pane();
         root.setPrefSize(WIDTH * TAMANY, HEIGHT * TAMANY);
         root.getChildren().addAll(TableroGroup, PiezaGroup);
-/*
-        try (InputStream is = Files.newInputStream(Paths.get("src\\damas\\damasimg.jpg"));)
-       {
-            ImageView img = new ImageView(new Image(is));
-            img.setFitWidth(1066);
-            img.setFitHeight(650);
 
-            root.getChildren().add(img);
-        }
-        catch (IOException e) {
-            System.out.println("No carga imagen");
-        }
-*/
-        
         MenuItem itemNewGame = new MenuItem("MODO CAMPAÑA");
-        itemNewGame.setOnMouseClicked(event->   {
-            
-                if (menu.isVisible()) {
-                    menu.hide();
-                }
-                else {
-                    menu.show();
-                }
-            
+        itemNewGame.setOnMouseClicked(event -> {
+
+            if (menu.isVisible()) {
+                menu.hide();
+            } else {
+                menu.show();
+            }
+
         });
-        
+
         MenuItem itemOptions = new MenuItem("MULTIJUGADOR");
-        itemOptions.setOnMouseClicked(event2 ->  {
-            Label secondLabel = new Label("Not yet implemented" );
-            
+        itemOptions.setOnMouseClicked(event2 -> {
+            Label secondLabel = new Label("Not yet implemented");
+
             StackPane secondaryLayout = new StackPane();
             secondaryLayout.getChildren().add(secondLabel);
-            
+
             Scene secondScene = new Scene(secondaryLayout, 210, 110);
-            
+
             Stage secondStage = new Stage();
             secondStage.setTitle("Multiplayer");
             secondStage.setScene(secondScene);
-            secondStage.setMaxWidth(230);        
+            secondStage.setMaxWidth(230);
             secondStage.setMaxHeight(110);
-            secondStage.setMinWidth(230);        
+            secondStage.setMinWidth(230);
             secondStage.setMinHeight(110);
             secondStage.show();
-            
+
         });
         MenuItem itemCredits = new MenuItem("CREDITS");
         itemCredits.setOnMouseClicked(event1 -> {
-            Label secondLabel = new Label("Hecho por Marc llobera, \n Victor Marchante y \n Sheng Ye " );
-            
+            Label secondLabel = new Label("Hecho por Marc llobera, \n Victor Marchante y \n Sheng Ye ");
+
             StackPane secondaryLayout = new StackPane();
             secondaryLayout.getChildren().add(secondLabel);
-            
+
             Scene secondScene = new Scene(secondaryLayout, 210, 110);
-            
+
             Stage secondStage = new Stage();
             secondStage.setTitle("Creditos");
             secondStage.setScene(secondScene);
-            secondStage.setMaxWidth(210);        
+            secondStage.setMaxWidth(210);
             secondStage.setMaxHeight(110);
-            secondStage.setMinWidth(210);        
+            secondStage.setMinWidth(210);
             secondStage.setMinHeight(110);
             secondStage.show();
-            
+
         });
-        
+
         MenuItem itemQuit = new MenuItem("SALIR");
         itemQuit.setOnMouseClicked(event -> System.exit(0));
-        
+
         menu = new MenuBox("LAS DAMAS",
                 itemNewGame,
                 itemOptions,
@@ -122,7 +110,7 @@ public static final int TAMANY = 80;
                 itemQuit);
 
         root.getChildren().add(menu);
-        
+
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
                 Tablero Tablero = new Tablero((x + y) % 2 == 0, x, y);
@@ -149,96 +137,7 @@ public static final int TAMANY = 80;
 
         return root;
     }
-   /* public Parent createContent() {
-        Pane root = new Pane();
-        root.setPrefSize(1000, 650);
 
-        try (InputStream is = Files.newInputStream(Paths.get("src\\damas\\damasimg.jpg"));)
-       {
-            ImageView img = new ImageView(new Image(is));
-            img.setFitWidth(1066);
-            img.setFitHeight(650);
-
-            root.getChildren().add(img);
-        }
-        catch (IOException e) {
-            System.out.println("No carga imagen");
-        }
-
-        
-        MenuItem itemNewGame = new MenuItem("MODO CAMPAÑA");
-        itemNewGame.setOnMouseClicked(event->   {
-            Label secondLabel = new Label("Not yet implemented" );
-            
-            StackPane secondaryLayout = new StackPane();
-            secondaryLayout.getChildren().add(secondLabel);
-            
-            Scene secondScene = new Scene(secondaryLayout, 210, 110);
-            
-            Stage secondStage = new Stage();
-            secondStage.setTitle("Campaña");
-            secondStage.setScene(secondScene);
-            secondStage.setMaxWidth(230);        
-            secondStage.setMaxHeight(110);
-            secondStage.setMinWidth(230);        
-            secondStage.setMinHeight(110);
-            secondStage.show();
-            
-        });
-        
-        MenuItem itemOptions = new MenuItem("MULTIJUGADOR");
-        itemOptions.setOnMouseClicked(event2 ->  {
-            Label secondLabel = new Label("Not yet implemented" );
-            
-            StackPane secondaryLayout = new StackPane();
-            secondaryLayout.getChildren().add(secondLabel);
-            
-            Scene secondScene = new Scene(secondaryLayout, 210, 110);
-            
-            Stage secondStage = new Stage();
-            secondStage.setTitle("Multiplayer");
-            secondStage.setScene(secondScene);
-            secondStage.setMaxWidth(230);        
-            secondStage.setMaxHeight(110);
-            secondStage.setMinWidth(230);        
-            secondStage.setMinHeight(110);
-            secondStage.show();
-            
-        });
-        MenuItem itemCredits = new MenuItem("CREDITS");
-        itemCredits.setOnMouseClicked(event1 -> {
-            Label secondLabel = new Label("Hecho por Marc llobera, \n Victor Marchante y \n Sheng Ye " );
-            
-            StackPane secondaryLayout = new StackPane();
-            secondaryLayout.getChildren().add(secondLabel);
-            
-            Scene secondScene = new Scene(secondaryLayout, 210, 110);
-            
-            Stage secondStage = new Stage();
-            secondStage.setTitle("Creditos");
-            secondStage.setScene(secondScene);
-            secondStage.setMaxWidth(210);        
-            secondStage.setMaxHeight(110);
-            secondStage.setMinWidth(210);        
-            secondStage.setMinHeight(110);
-            secondStage.show();
-            
-        });
-        
-        MenuItem itemQuit = new MenuItem("SALIR");
-        itemQuit.setOnMouseClicked(event -> System.exit(0));
-        
-        menu = new MenuBox("LAS DAMAS",
-                itemNewGame,
-                itemOptions,
-                itemCredits,
-                new MenuItem(""),
-                itemQuit);
-
-        root.getChildren().add(menu);
-        return root;
-    }*/
-    
     public ResultadoMovimiento tryMove(Pieza Pieza, int newX, int newY) {
         if (Tabla[newX][newY].hasPieza() || (newX + newY) % 2 == 0) {
             return new ResultadoMovimiento(TiposMovimiento.NONE);
@@ -261,8 +160,9 @@ public static final int TAMANY = 80;
 
         return new ResultadoMovimiento(TiposMovimiento.NONE);
     }
+
     public int toTabla(double pixel) {
-        return (int)(pixel + TAMANY / 2) / TAMANY;
+        return (int) (pixel + TAMANY / 2) / TAMANY;
     }
 
     @Override
@@ -272,8 +172,7 @@ public static final int TAMANY = 80;
             if (event.getCode() == KeyCode.ESCAPE) {
                 if (menu.isVisible()) {
                     menu.hide();
-                }
-                else {
+                } else {
                     menu.show();
                 }
             }
@@ -319,25 +218,8 @@ public static final int TAMANY = 80;
         return Pieza;
     }
 
-/*
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        Scene scene = new Scene(createContent());
-        scene.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ESCAPE) {
-                if (menu.isVisible()) {
-                    menu.hide();
-                }
-                else {
-                    menu.show();
-                }
-            }
-        });
-        primaryStage.setTitle("Damas");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }*/
     public static class MenuBox extends StackPane {
+
         public MenuBox(String title, MenuItem... items) {
             Rectangle bg = new Rectangle(639.4, 650);
             bg.setOpacity(0.2);
@@ -389,12 +271,13 @@ public static final int TAMANY = 80;
     }
 
     public static class MenuItem extends StackPane {
+
         public MenuItem(String name) {
             Rectangle bg = new Rectangle(300, 24);
 
-            LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] {
-                    new Stop(0, Color.BLACK),
-                    new Stop(0.2, Color.DARKGREY)
+            LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[]{
+                new Stop(0, Color.BLACK),
+                new Stop(0.2, Color.DARKGREY)
             });
 
             bg.setFill(gradient);
