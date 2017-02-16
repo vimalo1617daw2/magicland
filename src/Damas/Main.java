@@ -1,18 +1,8 @@
 package Damas;
 
-import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import static Damas.Damas.HEIGHT;
-import static Damas.Damas.TAMANY;
-import static Damas.Damas.WIDTH;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import static Damas.Main.HEIGHT;
+import static Damas.Main.TAMANY;
+import static Damas.Main.WIDTH;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -21,7 +11,6 @@ import javafx.application.Application;
 import javafx.geometry.*;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
-import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
@@ -42,14 +31,29 @@ public class Main extends Application {
     public Group TableroGroup = new Group();
     public Group PiezaGroup = new Group();
     public static Font font;
-    public MenuBox menu;
+    public CajaMenu menu;
 
     public Parent createContent() {
         Pane root = new Pane();
         root.setPrefSize(WIDTH * TAMANY, HEIGHT * TAMANY);
         root.getChildren().addAll(TableroGroup, PiezaGroup);
 
-        MenuItem itemNewGame = new MenuItem("MODO CAMPAÑA");
+        ItemsMenu itemContador = new ItemsMenu("CONTADOR");
+        itemContador.setOnMouseClicked(event3 -> {
+            Label secondLabel = new Label("Not yet implemented");
+            StackPane secondaryLayout = new StackPane();
+            secondaryLayout.getChildren().add(secondLabel);
+            Scene secondScene = new Scene(secondaryLayout, 400, 110);
+            Stage secondStage = new Stage();
+            secondStage.setTitle("CONTADOR");
+            secondStage.setScene(secondScene);
+            secondStage.setMaxWidth(230);
+            secondStage.setMaxHeight(110);
+            secondStage.show();
+
+        });
+
+        ItemsMenu itemNewGame = new ItemsMenu("MODO CAMPAÑA");
         itemNewGame.setOnMouseClicked(event -> {
 
             if (menu.isVisible()) {
@@ -60,7 +64,7 @@ public class Main extends Application {
 
         });
 
-        MenuItem itemOptions = new MenuItem("MULTIJUGADOR");
+        ItemsMenu itemOptions = new ItemsMenu("MULTIJUGADOR");
         itemOptions.setOnMouseClicked(event2 -> {
             Label secondLabel = new Label("Not yet implemented");
 
@@ -79,15 +83,13 @@ public class Main extends Application {
             secondStage.show();
 
         });
-        MenuItem itemCredits = new MenuItem("CREDITS");
+
+        ItemsMenu itemCredits = new ItemsMenu("CREDITS");
         itemCredits.setOnMouseClicked(event1 -> {
             Label secondLabel = new Label("Hecho por Marc llobera, \n Victor Marchante y \n Sheng Ye ");
-
             StackPane secondaryLayout = new StackPane();
             secondaryLayout.getChildren().add(secondLabel);
-
             Scene secondScene = new Scene(secondaryLayout, 210, 110);
-
             Stage secondStage = new Stage();
             secondStage.setTitle("Creditos");
             secondStage.setScene(secondScene);
@@ -99,14 +101,15 @@ public class Main extends Application {
 
         });
 
-        MenuItem itemQuit = new MenuItem("SALIR");
+        ItemsMenu itemQuit = new ItemsMenu("SALIR");
         itemQuit.setOnMouseClicked(event -> System.exit(0));
 
-        menu = new MenuBox("LAS DAMAS",
+        menu = new CajaMenu("LAS DAMAS",
                 itemNewGame,
+                itemContador,
                 itemOptions,
                 itemCredits,
-                new MenuItem(""),
+                new ItemsMenu(""),
                 itemQuit);
 
         root.getChildren().add(menu);
@@ -165,8 +168,8 @@ public class Main extends Application {
         return (int) (pixel + TAMANY / 2) / TAMANY;
     }
 
-    @Override
     public void start(Stage primaryStage) throws Exception {
+
         Scene scene = new Scene(createContent());
         scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
@@ -207,10 +210,14 @@ public class Main extends Application {
                     Pieza.move(newX, newY);
                     Tabla[x0][y0].setPieza(null);
                     Tabla[newX][newY].setPieza(Pieza);
-
                     Pieza otherPieza = result.getPieza();
                     Tabla[toTabla(otherPieza.getOldX())][toTabla(otherPieza.getOldY())].setPieza(null);
                     PiezaGroup.getChildren().remove(otherPieza);
+
+                    ClaseGenerica<String> matar = new ClaseGenerica<String>("Test");
+                    matar.classType();
+                    // Label secondLabel = new Label("Not yet implemented");
+
                     break;
             }
         });
@@ -218,9 +225,9 @@ public class Main extends Application {
         return Pieza;
     }
 
-    public static class MenuBox extends StackPane {
+    public static class CajaMenu extends StackPane {
 
-        public MenuBox(String title, MenuItem... items) {
+        public CajaMenu(String title, ItemsMenu... items) {
             Rectangle bg = new Rectangle(639.4, 650);
             bg.setOpacity(0.2);
 
@@ -270,9 +277,9 @@ public class Main extends Application {
         }
     }
 
-    public static class MenuItem extends StackPane {
+    public static class ItemsMenu extends StackPane {
 
-        public MenuItem(String name) {
+        public ItemsMenu(String name) {
             Rectangle bg = new Rectangle(300, 24);
 
             LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[]{
@@ -315,5 +322,29 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+
+    }
+}
+
+class ClaseGenerica<T> {
+
+    T obj;
+
+    public ClaseGenerica(T o) {
+        obj = o;
+    }
+
+    public static void classType() {
+
+        Label secondLabel = new Label("pieza muerta ");
+        StackPane secondaryLayout = new StackPane();
+        secondaryLayout.getChildren().add(secondLabel);
+        Scene secondScene = new Scene(secondaryLayout, 400, 110);
+        Stage secondStage = new Stage();
+        secondStage.setTitle("pieza Muerta");
+        secondStage.setScene(secondScene);
+        secondStage.setMaxWidth(230);
+        secondStage.setMaxHeight(110);
+        secondStage.show();
     }
 }

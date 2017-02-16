@@ -20,10 +20,10 @@ public class Tablero extends Rectangle {
     }
 
     public Tablero(boolean light, int x, int y) {
-        setWidth(Damas.TAMANY);
-        setHeight(Damas.TAMANY);
+        setWidth(Main.TAMANY);
+        setHeight(Main.TAMANY);
 
-        relocate(x * Damas.TAMANY, y * Damas.TAMANY);
+        relocate(x * Main.TAMANY, y * Main.TAMANY);
 
         setFill(light ? Color.valueOf("#ffffff") : Color.valueOf("#424242"));
     }

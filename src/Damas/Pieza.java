@@ -4,7 +4,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 
-import static Damas.Damas.TAMANY;
+import static Damas.Main.TAMANY;
 
 
 public class Pieza extends StackPane {
