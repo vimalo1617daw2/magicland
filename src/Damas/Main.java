@@ -21,7 +21,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Main extends Application {
-
+        int movimientoBlanco = 0;
+        int movimientoNegro = 0;
     public static final int TAMANY = 80;
     public static final int WIDTH = 8;
     public static final int HEIGHT = 8;
@@ -120,8 +121,8 @@ public class Main extends Application {
                 Tabla[x][y] = Tablero;
 
                 TableroGroup.getChildren().add(Tablero);
-
                 Pieza Pieza = null;
+
 
                 if (y <= 2 && (x + y) % 2 != 0) {
                     Pieza = makePieza(TiposPieza.NEGRO, x, y);
@@ -142,25 +143,58 @@ public class Main extends Application {
     }
 
     public ResultadoMovimiento tryMove(Pieza Pieza, int newX, int newY) {
+
+        MovimientoA blanco =  new MovimientoA(movimientoBlanco);
+        MovimientoA negro =  new MovimientoA(movimientoNegro);
+        int x0 = toTabla(Pieza.getOldX());
+        int y0 = toTabla(Pieza.getOldY());
+        if(blanco.compareTo(negro)> movimientoNegro){
+            System.out.println("blanco mas"+blanco.compareTo(negro));
+            movimientoBlanco = movimientoBlanco+1;
+            System.out.println("blanco"+movimientoBlanco);
+            ClaseGenerica<String> moveBlanco = new ClaseGenerica<String>("moveBlanco");
+            moveBlanco.moveBlanco();
+            
+        }else{
+            System.out.println("negro mas"+blanco.compareTo(negro));
+            ClaseGenerica<String> moveNegro = new ClaseGenerica<String>("moveNegro");
+            moveNegro.moveNegro();
+            System.out.println("negro"+movimientoNegro);
+            movimientoNegro = movimientoNegro+1;
+        }
+        
         if (Tabla[newX][newY].hasPieza() || (newX + newY) % 2 == 0) {
             return new ResultadoMovimiento(TiposMovimiento.NONE);
         }
 
-        int x0 = toTabla(Pieza.getOldX());
-        int y0 = toTabla(Pieza.getOldY());
-
         if (Math.abs(newX - x0) == 1 && newY - y0 == Pieza.getType().moveDir) {
             return new ResultadoMovimiento(TiposMovimiento.NORMAL);
         } else if (Math.abs(newX - x0) == 2 && newY - y0 == Pieza.getType().moveDir * 2) {
-
+            
+            
             int x1 = x0 + (newX - x0) / 2;
             int y1 = y0 + (newY - y0) / 2;
 
             if (Tabla[x1][y1].hasPieza() && Tabla[x1][y1].getPieza().getType() != Pieza.getType()) {
+
+                //if (Pieza1.compareTo(Pieza2) ) {
+                   // ClaseGenerica<String> muerte1 = new ClaseGenerica<String>("muerte negro");
+                  //  muerte1.muerte1();
+                //} else {
+                  //  ClaseGenerica<String> muerte2 = new ClaseGenerica<String>("muerte blancp");
+                 //   muerte2.muerte2();
+                //}
+               // return new ResultadoMovimiento(TiposMovimiento.KILL,Tabla[x1][y1].getPieza());
+
+                 // ClaseGenerica<String> muerte1 = new
+                 // ClaseGenerica<String>("muerte negro"); muerte1.muerte1();
+                 // ClaseGenerica<String> muerte2 = new
+                  //ClaseGenerica<String>("muerte blanco"); muerte2.muerte2();
+                 
                 return new ResultadoMovimiento(TiposMovimiento.KILL, Tabla[x1][y1].getPieza());
             }
         }
-
+        
         return new ResultadoMovimiento(TiposMovimiento.NONE);
     }
 
@@ -200,6 +234,8 @@ public class Main extends Application {
             switch (result.getType()) {
                 case NONE:
                     Pieza.abortMove();
+                    ClaseGenerica<String> nulo = new ClaseGenerica<String>("nulo");
+                    nulo.nulo();
                     break;
                 case NORMAL:
                     Pieza.move(newX, newY);
@@ -322,6 +358,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+        
 
     }
 }
@@ -342,6 +379,48 @@ class ClaseGenerica<T> {
         Scene secondScene = new Scene(secondaryLayout, 400, 110);
         Stage secondStage = new Stage();
         secondStage.setTitle("pieza Muerta");
+        secondStage.setScene(secondScene);
+        secondStage.setMaxWidth(230);
+        secondStage.setMaxHeight(110);
+        secondStage.show();
+    }
+
+    public static void nulo() {
+
+        Label secondLabel = new Label("error movimiento");
+        StackPane secondaryLayout = new StackPane();
+        secondaryLayout.getChildren().add(secondLabel);
+        Scene secondScene = new Scene(secondaryLayout, 400, 110);
+        Stage secondStage = new Stage();
+        secondStage.setTitle("pieza mismo sitio");
+        secondStage.setScene(secondScene);
+        secondStage.setMaxWidth(230);
+        secondStage.setMaxHeight(110);
+        secondStage.show();
+    }
+
+    public static void moveNegro() {
+
+        Label secondLabel = new Label("moveNegro");
+        StackPane secondaryLayout = new StackPane();
+        secondaryLayout.getChildren().add(secondLabel);
+        Scene secondScene = new Scene(secondaryLayout, 400, 110);
+        Stage secondStage = new Stage();
+        secondStage.setTitle("moveNegro");
+        secondStage.setScene(secondScene);
+        secondStage.setMaxWidth(230);
+        secondStage.setMaxHeight(110);
+        secondStage.show();
+    }
+
+    public static void moveBlanco() {
+
+        Label secondLabel = new Label("moveBlanco");
+        StackPane secondaryLayout = new StackPane();
+        secondaryLayout.getChildren().add(secondLabel);
+        Scene secondScene = new Scene(secondaryLayout, 400, 110);
+        Stage secondStage = new Stage();
+        secondStage.setTitle("moveBlanco");
         secondStage.setScene(secondScene);
         secondStage.setMaxWidth(230);
         secondStage.setMaxHeight(110);
