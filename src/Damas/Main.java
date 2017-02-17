@@ -22,7 +22,7 @@ import javafx.util.Duration;
 
 public class Main extends Application {
         int movimientoBlanco = 0;
-        int movimientoNegro = 0;
+        int movimientoNegro = 2;
     public static final int TAMANY = 80;
     public static final int WIDTH = 8;
     public static final int HEIGHT = 8;
@@ -148,19 +148,19 @@ public class Main extends Application {
         MovimientoA negro =  new MovimientoA(movimientoNegro);
         int x0 = toTabla(Pieza.getOldX());
         int y0 = toTabla(Pieza.getOldY());
-        if(blanco.compareTo(negro)> movimientoNegro){
-            System.out.println("blanco mas"+blanco.compareTo(negro));
-            movimientoBlanco = movimientoBlanco+1;
-            System.out.println("blanco"+movimientoBlanco);
+        
+        if(blanco.compareTo(negro)<movimientoNegro){
             ClaseGenerica<String> moveBlanco = new ClaseGenerica<String>("moveBlanco");
             moveBlanco.moveBlanco();
-            
-        }else{
-            System.out.println("negro mas"+blanco.compareTo(negro));
-            ClaseGenerica<String> moveNegro = new ClaseGenerica<String>("moveNegro");
+            movimientoBlanco = movimientoBlanco + 1;
+            movimientoNegro = movimientoNegro - 1;
+            System.out.println("movimientoblanco" + movimientoBlanco);
+        }else if(negro.compareTo(blanco)>movimientoBlanco){
+           ClaseGenerica<String> moveNegro = new ClaseGenerica<String>("moveNegro");
             moveNegro.moveNegro();
-            System.out.println("negro"+movimientoNegro);
-            movimientoNegro = movimientoNegro+1;
+            movimientoNegro = movimientoNegro + 1;
+            movimientoBlanco = movimientoBlanco - 1;
+            System.out.println("movimientoNegro" + movimientoNegro);
         }
         
         if (Tabla[newX][newY].hasPieza() || (newX + newY) % 2 == 0) {
