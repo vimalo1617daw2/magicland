@@ -3,6 +3,7 @@ package Damas;
 import static Damas.Main.HEIGHT;
 import static Damas.Main.TAMANY;
 import static Damas.Main.WIDTH;
+import java.io.File;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -19,6 +20,17 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.effect.DropShadow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public class Main extends Application {
         int movimientoBlanco = 0;
@@ -356,7 +368,101 @@ public class Main extends Application {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws TransformerException, ParserConfigurationException {
+        
+                DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+		// root elements
+                
+                Document docu = docBuilder.newDocument();
+		Element rootElemen = docu.createElement("compania");
+		docu.appendChild(rootElemen);
+                
+                // staff elements
+		Element staf = docu.createElement("Staf");
+		rootElemen.appendChild(staf);
+
+		// set attribute to staff element
+		Attr att = docu.createAttribute("i");
+		att.setValue("1");
+		staf.setAttributeNode(att);
+
+		// shorten way
+		// staff.setAttribute("id", "1");
+
+		// firstname elements
+		Element firstnam = docu.createElement("firstnam");
+		firstnam.appendChild(docu.createTextNode("yong"));
+		staf.appendChild(firstnam);
+
+		// lastname elements
+		Element lastnam = docu.createElement("lastnam");
+		lastnam.appendChild(docu.createTextNode("mook kim"));
+		staf.appendChild(lastnam);
+
+		// nickname elements
+		Element nicknam = docu.createElement("nicknam");
+		nicknam.appendChild(docu.createTextNode("mkyong"));
+		staf.appendChild(nicknam);
+
+		// salary elements
+		Element salar = docu.createElement("salar");
+		salar.appendChild(docu.createTextNode("100000"));
+		staf.appendChild(salar);
+                
+                ////////////////////////////////////////////////////////
+		Document doc = docBuilder.newDocument();
+		Element rootElement = doc.createElement("company");
+		doc.appendChild(rootElement);
+
+		// staff elements
+		Element staff = doc.createElement("Staff");
+		rootElement.appendChild(staff);
+
+		// set attribute to staff element
+		Attr attr = doc.createAttribute("id");
+		attr.setValue("1");
+		staff.setAttributeNode(attr);
+
+		// shorten way
+		// staff.setAttribute("id", "1");
+
+		// firstname elements
+		Element firstname = doc.createElement("firstname");
+		firstname.appendChild(doc.createTextNode("yong"));
+		staff.appendChild(firstname);
+
+		// lastname elements
+		Element lastname = doc.createElement("lastname");
+		lastname.appendChild(doc.createTextNode("mook kim"));
+		staff.appendChild(lastname);
+
+		// nickname elements
+		Element nickname = doc.createElement("nickname");
+		nickname.appendChild(doc.createTextNode("mkyong"));
+		staff.appendChild(nickname);
+
+		// salary elements
+		Element salary = doc.createElement("salary");
+		salary.appendChild(doc.createTextNode("100000"));
+		staff.appendChild(salary);
+
+		// write the content into xml file
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer();
+		DOMSource source = new DOMSource(doc);
+                DOMSource sourc = new DOMSource(docu);
+		StreamResult result = new StreamResult(new File("jugador.xml"));
+                StreamResult resulta = new StreamResult(new File("jugador2.xml"));
+		// Output to console for testing
+		// StreamResult result = new StreamResult(System.out);
+
+		transformer.transform(source, result);
+                transformer.transform(sourc, resulta);
+
+		System.out.println("File saved!");
+
         launch(args);
         
 
